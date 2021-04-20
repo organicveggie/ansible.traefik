@@ -32,6 +32,7 @@ traefik_network_ipam_iprange: "{{
   traefik_network_ipam_temp.iprange
   | default('172.16.1.0/24')
 }}"
+traefik_extra_networks: []
 traefik_image: 'traefik'
 traefik_add_volumes: []
 traefik_ports:

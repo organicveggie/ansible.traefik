@@ -30,6 +30,10 @@
         gateway: '{{ traefik_network_ipam_gateway }}'
         iprange: '{{ traefik_network_ipam_iprange }}'
 
+- name: 'setup: build network list'
+  set_fact:
+    traefik_all_networks: "{{ [{ 'name': traefik_network_name }] + traefik_extra_networks }}"
+
 - name: 'setup : start traefik container'
   become: true
   docker_container:
@@ -42,6 +46,6 @@
     env: '{{ traefik_container_environment }}'
     command:
       - '--configFile=/etc/traefik/traefik.yml'
-    networks:
-      - name: '{{ traefik_network_name }}'
+    network_mode: '{{ traefik_network_name }}'
+    networks: '{{ traefik_all_networks }}'
     networks_cli_compatible: true
